@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # CMD ["tail", "-f", "/dev/null"]
-CMD ["python", "app.py"]
+CMD ["python", "-u", "app.py"]
