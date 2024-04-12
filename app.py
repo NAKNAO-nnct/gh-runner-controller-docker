@@ -13,7 +13,7 @@ client = client.DockerAPIClient()
 def webhook():
     # request header から X-GitHub-Event を取得
     event = request.headers.get('X-GitHub-Event')
-    hook_id = request.headers.get('X-GitHub-Hook-ID')
+    hook_id = request.headers.get('X-GitHub-Delivery')
     print('x-github-hook-id: ', hook_id)
     print('x-github-event: ', event)
 
