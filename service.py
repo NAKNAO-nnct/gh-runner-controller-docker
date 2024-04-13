@@ -17,7 +17,10 @@ def run_container(client: client.DockerAPIClient, id = None):
         'EPHEMERAL': 'true',
     }
 
-    volumes = ['/var/run/docker.sock:/var/run/docker.sock']
+    volumes = [
+        '/var/run/docker.sock:/var/run/docker.sock',
+        '/root/.ssh:/root/.ssh',
+    ]
 
     container_name = 'gha-runner-' + id
 
