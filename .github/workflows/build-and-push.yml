@@ -42,6 +42,10 @@ jobs:
             TAG=${GITHUB_REF#refs/tags/}
           else
             TAG=${GITHUB_REF#refs/heads/}
+
+            if [[ $TAG == main ]]; then
+              TAG=latest
+            fi
           fi
           echo "TAG=$TAG" >> "$GITHUB_ENV"
 
