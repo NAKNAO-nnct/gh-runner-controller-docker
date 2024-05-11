@@ -15,6 +15,7 @@ def run_container(client: client.DockerAPIClient, id = None):
         'ORG_NAME': config.GITHUB_ORG_NAME,
         'ACCESS_TOKEN': config.GITHUB_ACCESS_TOKEN,
         'EPHEMERAL': 'true',
+        'DISABLE_AUTO_UPDATE': 'true',
     }
 
     volumes = [
