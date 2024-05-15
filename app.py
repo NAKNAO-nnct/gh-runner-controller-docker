@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 client = client.DockerAPIClient()
 
-@app.route('/webhook', methods=['POST'])
+@app.route(config.APP_WEBHOOK_ENDPOINT, methods=['POST'])
 def webhook():
     # request header から X-GitHub-Event を取得
     event = request.headers.get('X-GitHub-Event')
