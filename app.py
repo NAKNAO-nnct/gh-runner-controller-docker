@@ -11,6 +11,9 @@ client = client.DockerAPIClient()
 
 @app.route(config.APP_WEBHOOK_ENDPOINT, methods=['POST'])
 def webhook():
+    # 非同期でイメージをプル
+    threading.Thread(target=service.pull_image, args=(client,)).start()
+
     # request header から X-GitHub-Event を取得
     event = request.headers.get('X-GitHub-Event')
     hook_id = request.headers.get('X-GitHub-Delivery')
@@ -32,4 +35,7 @@ def webhook():
     }
 
 if __name__ == '__main__':
+    # イメージをプル
+    service.pull_image(client)
+
     app.run(host=config.APP_HOST, port=config.APP_PORT)

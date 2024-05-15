@@ -16,6 +16,8 @@ APP_PORT = int(get_env('APP_PORT', '8080'))
 
 APP_WEBHOOK_ENDPOINT = get_env('APP_WEBHOOK_ENDPOINT', '/webhook')
 
+RUNNER_IMAGE = get_env('RUNNER_IMAGE', 'myoung34/github-runner:latest')
+
 GITHUB_RUNNER_SCOPE = get_env('GITHUB_RUNNER_SCOPE', 'repo')
 GITHUB_ORG_NAME = get_env('GITHUB_ORG_NAME', 'example')
 GITHUB_ACCESS_TOKEN = get_env('GITHUB_ACCESS_TOKEN', 'xxxxxxxx')

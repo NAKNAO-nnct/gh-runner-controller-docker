@@ -8,8 +8,6 @@ def run_container(client: client.DockerAPIClient, id = None):
     else:
         id = str(random.randint(0, 10000))
 
-    image = 'myoung34/github-runner:latest'
-
     environment = {
         'RUNNER_SCOPE': config.GITHUB_RUNNER_SCOPE,
         'ORG_NAME': config.GITHUB_ORG_NAME,
@@ -27,6 +25,9 @@ def run_container(client: client.DockerAPIClient, id = None):
 
     print('container name: ', container_name)
 
-    container = client.create_container(image, container_name, environment, volumes)
+    container = client.create_container(config.RUNNER_IMAGE, container_name, environment, volumes)
 
     print('container id: ', container.id)
+
+def pull_image(client: client.DockerAPIClient):
+    client.pull_image(config.RUNNER_IMAGE)

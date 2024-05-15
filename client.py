@@ -15,6 +15,11 @@ class DockerAPIClient:
     def init(self):
         self.client = docker.DockerClient(base_url=config.DOCKER_HOST_URL)
 
+    # Image pull
+    def pull_image(self, image):
+        print('pull_image: ', image)
+        self.client.images.pull(image)
+
     def get_containers(self, is_all=False, filters={}):
         return self.client.containers.list(all=is_all, filters=filters)
 
