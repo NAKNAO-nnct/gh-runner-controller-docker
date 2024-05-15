@@ -1,6 +1,7 @@
 services:
   api:
-    build: .
+    image: ghcr.io/naknao-nnct/gh-runner-controller-docker:latest  # production
+    # build: .  # development
     restart: always
     env_file:
       - .env
