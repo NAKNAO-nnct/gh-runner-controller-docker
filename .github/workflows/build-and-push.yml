@@ -105,7 +105,8 @@ jobs:
           # 3. untaggedイメージのdigest取得と削除判定（APIからid/digest取得）
           UNTAGGED_IMAGES=$(gh api -X GET /user/packages/container/${{ env.REPO_NAME }}/versions --paginate --jq '.[] | select(.metadata.container.tags | length == 0)')
           for row in $UNTAGGED_IMAGES; do
-            DIGEST=$(echo "$row" | jq -r '.metadata.container.digest')
+            DIGEST=$(echo "$row" | jq -r '.name')
+            DIGEST=${DIGEST#sha256:}
             ID=$(echo "$row" | jq -r '.id')
             if ! echo -e "$TAGGED_DIGESTS" | grep -q "$DIGEST"; then
               echo "Deleting untagged image ID: $ID (digest: $DIGEST)"
