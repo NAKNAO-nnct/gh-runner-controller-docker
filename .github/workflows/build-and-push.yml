@@ -73,8 +73,30 @@ jobs:
           fi
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: ${{ env.IMAGE_TAG }}${{ env.LATEST_TAG }}
+
+      - name: docker image remove
+        run: docker rmi ${{ env.IMAGE_TAG }}${{ env.LATEST_TAG }}
+
+      - name: docker pull
+        run: docker pull ${{ env.IMAGE_TAG }}${{ env.LATEST_TAG }}
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Get repository name
+        run: |
+          REPO_NAME="$(echo ${{ github.repository }} | awk -F/ '{ print $2 }')" >> $GITHUB_ENV
+          echo "REPO_NAME=${REPO_NAME}" >> $GITHUB_ENV
+
+      - name: Delete Untagged images
+        run: |
+          untagged_images=$(gh api -X GET /user/packages/container/${{ env.REPO_NAME }}/versions --paginate --jq '.[] | select(.metadata.container.tags | length == 0) | .id')
+          for image_id in ${untagged_images}; do
+            echo "Deleting image with ID: ${image_id}"
+            gh api -X DELETE /user/packages/container/${{ env.REPO_NAME }}/versions/${image_id}
+          done
