@@ -79,9 +79,6 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_TAG }}${{ env.LATEST_TAG }}
 
-      - name: docker image remove
-        run: docker rmi ${{ env.IMAGE_TAG }}${{ env.LATEST_TAG }}
-
       - name: docker pull
         run: docker pull ${{ env.IMAGE_TAG }}${{ env.LATEST_TAG }}
 
